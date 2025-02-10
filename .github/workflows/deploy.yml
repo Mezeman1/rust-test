@@ -54,12 +54,15 @@ jobs:
           version: 'latest'
 
       - name: Build project
-        run: trunk build --release
+        run: |
+          mkdir -p dist
+          cp styles/output.css dist/tailwind.css
+          trunk build --release --public-url /rust-test/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: 'dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
